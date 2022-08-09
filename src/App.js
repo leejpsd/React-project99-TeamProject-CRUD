@@ -1,3 +1,4 @@
+import Router from "./shared/Router";
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
@@ -66,6 +67,7 @@ function App() {
   return (
     <>
       <GlobalStyle />
+      <Router />
     </>
   );
 }
