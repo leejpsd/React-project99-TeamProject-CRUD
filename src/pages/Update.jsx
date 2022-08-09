@@ -6,6 +6,7 @@ import { __postTodos } from "../redux/modules/todos";
 import { __deleteTodos } from "../redux/modules/todos";
 import { serchTodos } from "../redux/modules/todos";
 import { useNavigate } from "react-router-dom";
+import theme from "../styledcomponents/theme";
 import styled from "styled-components";
 import "../css/main.css";
 
