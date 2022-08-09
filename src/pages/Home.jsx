@@ -5,6 +5,7 @@ import { __getTodos } from "../redux/modules/todos";
 import { __deleteTodos } from "../redux/modules/todos";
 import styled from "styled-components";
 import { timeForToday } from "./Time";
+import Update from "./Update";
 
 const Home = () => {
   const { todos } = useSelector((state) => state.todos);
@@ -20,234 +21,161 @@ const Home = () => {
   }, []);
 
   return (
-    <>
-      {/* 레이아웃테스트 */}
-      <NavBox>
-        <NavBoxItem>
-          <NavInput type="text" />
-          <NavButtonGroup>
-            <span className="material-symbols-outlined">search</span>
-            <span
-              onClick={() => {
-                navigate("/Update");
-              }}
-              className="material-symbols-outlined"
-            >
-              add_box
-            </span>
-          </NavButtonGroup>
-        </NavBoxItem>
-      </NavBox>
+    <Wrap>
       <Container>
-        {todos.map((todo) => (
-          <Card key={todo.id}>
-            <CardImg></CardImg>
-            <CardInfo>
-              <CardTitle>
-                <div
-                  onClick={() => {
-                    navigate(`/deatail/${todo.id}`);
-                  }}
-                >
-                  {todo.title}
-                </div>
-                <span
-                  onClick={() => deleteHandler(todo.id)}
-                  className="material-symbols-outlined"
-                >
-                  delete
-                </span>
-              </CardTitle>
-            </CardInfo>
-            <IconBox>
-              <Ul>
-                <Li>
-                  <span className="material-symbols-outlined">favorite</span>
-                </Li>
-                <Li>
-                  <span className="material-symbols-outlined">maps_ugc</span>
-                </Li>
-              </Ul>
-            </IconBox>
-            <InfoBox>
-              <div>
-                <div>{timeForToday(todo.time)}</div>
-              </div>
-              <Info>
-                <span>{todo.username}</span> {todo.body}
-              </Info>
-            </InfoBox>
-          </Card>
-        ))}
+        <Nav>
+          <Logo>Todo<span style={{ color: "#000" }}>List</span></Logo>
+          <Update></Update>
+        </Nav>
+        <Section>
+          <SearchWrap>
+            <Search type="text" placeholder="검색어를 입력하세요."/>
+            <SearchButton style={{color:"#fff"}}><img style={{width:'48%', marginRight:"5px"}} src="images/search.png" /></SearchButton>
+          </SearchWrap>
+          <div>
+            {todos.length == 0 ? <p style={{color:"#777777", textAlign: "center"}}>Todo List를 추가해주세요.</p> : 
+              todos.map((todo) => (
+                <Card>
+                  <ImgWrap style={{backgroundImage: "url(" + todo.img + ")"}}>
+                  </ImgWrap>
+                  <TextWrap onClick={() => { navigate(`/deatail/${todo.id}`); }}>
+                    <Title>{todo.title}</Title>
+                    <p style={{fontSize:"14px", marginBottom: "5px"}}>{todo.body}</p>
+                    <span style={{ fontSize: "14px" }}>{todo.username}</span> / <Time style={{ fontSize: "14px" }}>{timeForToday(todo.time)}</Time>
+                  </TextWrap>
+                  <DeleteButton onClick={() => deleteHandler(todo.id)}><img style={{width:'100%'}} src="images/trash.png" /></DeleteButton>
+                </Card>
+              ))}
+          </div>
+            
+        </Section>
+        <Info></Info>
       </Container>
-    </>
-  );
+      <Addbutton onClick={() => { navigate("/Update"); }}>Add</Addbutton>
+    </Wrap>
+  )
 };
 
-export default Home;
-
-const NavBox = styled.nav`
-  /* position: fixed; */
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 50px;
-  background: gray;
-  border-bottom: 1px solid #dfdfdf;
+const Wrap = styled.div`
+  max-width: 100vw;
+  height: 100vh;
   display: flex;
-  justify-content: center;
-  padding: 5px 0;
-  align-items: center;
-  border: solid red 2px;
-`;
-const NavBoxItem = styled.nav`
-  width: 20%;
-  max-width: 1000px;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: solid red 1px;
-`;
-const NavInput = styled.input`
-  width: 200px;
-  height: 25px;
-  background: #fafafa;
-  border: 1px solid #dfdfdf;
-  border-radius: 2px;
-  color: rgba(0, 0, 0, 0.5);
-  text-align: center;
-`;
+  background-color: #dfe4f5;
+  position: relative;
+`
 
-const NavButtonGroup = styled.div`
-  padding: 0;
-  margin-left: 10px;
-  display: flex;
-  justify-content: space-around;
-  width: 80px;
-  border: solid red 1px;
-`;
-
-const Container = styled.div`
-  width: 80vw;
+const Container = styled.section`
+  max-width: 1400px;
+  height: 700px;
   margin: auto;
-  border: solid red 3px;
-  position: relative;
-  flex-wrap: wrap-reverse;
-  overflow: hidden;
-  padding-top: 15px;
-  padding-bottom: 15px;
+  border-radius: 10px;
+  background-color: #fff;
   display: flex;
-  align-items: auto;
-  flex-direction: row-reverse;
-  justify-content: center;
-`;
-const Card = styled.div`
-  min-width: 275px;
-  width: 275px;
-  position: relative;
-  margin: 15px 15px;
-  height: 350px;
-  border-radius: 7px;
-  background-size: cover;
-  background: rgba(0, 0, 0, 0.1);
-  box-shadow: 5px 5px 10px 1px rgb(0 0 0 / 30%);
-  transition: 0.2s all linear;
-  box-sizing: border-box;
-`;
-const CardImg = styled.div`
-  width: 100%;
-  height: 275px;
-  position: relative;
-  border-top-right-radius: 5px;
-  border-top-left-radius: 5px;
-  background-color: darkgray;
-  //이미지
-`;
-
-const CardInfo = styled.div`
-  position: relative;
-  width: 100%;
-  height: 35px;
-  line-height: 35px;
-  top: -265px;
-  border-top-right-radius: 5px;
-  border-top-left-radius: 5px;
-  font-family: "Open Sans";
-  color: white;
-`;
-
-const CardTitle = styled.div`
-  line-height: 35px;
-  height: 35px;
-  position: relative;
-  font-size: 25px;
-  text-align: center;
-  background: darkblue;
-  box-shadow: 5px 5px 10px 2px rgb(0 0 0 / 30%);
-  display: flex;
-  border: solid red 1px;
-  align-items: center;
-  justify-content: space-between;
-  div {
-    margin-left: 10px;
-  }
-  span {
-    margin-right: 10px;
-  }
-`;
-const IconBox = styled.div`
-  border: solid red 2px;
-  position: absolute;
-  height: 50px;
-  width: 100%;
-  background: darkblue;
-  box-shadow: 2px 2px 10px 0px rgb(0 0 0 / 50%);
-  top: 240px;
-`;
-
-const Ul = styled.ul`
-  padding: 0;
-  margin: 0;
-  list-style: none;
-  width: 100%;
+  box-shadow: 0px 2px 20px #a7a7a7;
+`
+const Nav = styled.nav`
+  width:350px;
   height: 100%;
-  display: flex;
-`;
-
-const Li = styled.li`
-  display: flex;
-  border: solid red 1px;
+  padding: 48px;
+`
+const Logo = styled.h1`
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 30px;
+  font-weight: bold;
+  color: #5060ff;
+`
+const Section = styled.div`
+  padding-top:48px;
+  width: 680px;
   height: 100%;
-  align-items: center;
-  line-height: 75px;
-  font-size: 1.5em;
-  color: white;
-  text-shadow: 5px 5px 5px rgb(0 0 0 / 50%);
-  margin-left: 10px;
-`;
+  background-color: #f5f5fb;
+  overflow: auto;
+`
 
-const InfoBox = styled.div`
-  border: solid red 1px;
-  position: absolute;
-  height: 50px;
-  width: 100%;
-  box-shadow: 2px 2px 10px 0px rgb(0 0 0 / 50%);
-  bottom: 0;
-  p div {
-    font-size: 13px;
-    position: absolute;
-    bottom: 0px;
-    margin-left: 10px;
-    color: gray;
-  }
-`;
+const SearchWrap = styled.div`
+  display: flex;
+  width: 600px;
+  height: 40px;
+  margin: 0 auto;
+  background-color: #fff;
+  margin-bottom:20px;
+  border-radius: 50px;
+  box-shadow: 0 0 10px 0px #a7a7a7;
+`
+
+const Search = styled.input`
+  width:600px;
+  border: none;
+  border-radius: 50px;
+  padding-left: 20px;
+`
+
+const SearchButton = styled.button`
+  width:50px;
+  background-color: #5060ff;
+  border: none;
+  border-radius: 0px 20px 20px 0px;
+  cursor: pointer;
+`
 
 const Info = styled.div`
-  margin-left: 10px;
-  position: absolute;
-  top: 0;
-  span {
-    font-weight: bold;
-  }
-`;
+  width: 330px;
+`
+
+const Card = styled.div`
+  font-family: 'Noto Sans KR', sans-serif;
+  width: 600px;
+  border-radius: 10px;
+  background-color: #fff;
+  display: flex;
+  padding: 20px;
+  margin: 0 auto;
+  gap: 20px;
+  margin-bottom: 10px;
+`
+
+const ImgWrap = styled.div`
+  width: 70px;
+  height: 70px;
+  border-radius: 5px;
+  background-size: cover;
+  background-position: center center;
+`
+
+const TextWrap = styled.div`
+  cursor: pointer;
+`
+
+const Title = styled.h5`
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 25px;
+`
+const Time = styled.span`
+  text-align: right;
+`
+
+const DeleteButton = styled.button`
+  width:15px;
+  height:15px;
+  margin-left: auto;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+`
+
+const Addbutton = styled.button`
+  width: 170px;
+  height: 55px;
+  border: none;
+  font-size: 16px;
+  background-color: #7884fb;
+  color: #fff;
+  position: fixed;
+  border-radius: 20px;
+  right: 10px;
+  bottom: 10px;
+  box-shadow: 0px 2px 20px #a7a7a7;
+  cursor: pointer;
+`
+export default Home;

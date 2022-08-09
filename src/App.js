@@ -1,5 +1,6 @@
 import Router from "./shared/Router";
 import { createGlobalStyle } from "styled-components";
+import './shared/App.css'
 
 const GlobalStyle = createGlobalStyle`
 html, body, div, span, applet, object, iframe,
