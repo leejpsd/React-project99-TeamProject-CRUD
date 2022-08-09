@@ -44,7 +44,7 @@ const Home = () => {
             <CardImg></CardImg>
             <CardInfo>
               <CardTitle>
-                <div>{todo.title}</div>
+                <div onClick={()=>{navigate(`/deatail/${todo.id}`)}}>{todo.title}</div>
                 <span
                   onClick={() => deleteHandler(todo.id)}
                   class="material-symbols-outlined"
@@ -68,7 +68,7 @@ const Home = () => {
                 <div>{timeForToday(todo.time)}</div>
               </p>
               <Info>
-                <span>{todo.title}</span> {todo.body}
+                <span>{todo.username}</span> {todo.body}
               </Info>
             </InfoBox>
           </Card>

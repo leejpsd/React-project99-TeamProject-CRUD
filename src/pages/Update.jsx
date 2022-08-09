@@ -13,12 +13,14 @@ const Update = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { isLoading, error, todos } = useSelector((state) => state.todos);
+  const [user, userHandler, userReset] = useInput();
   const [title, titleHandler, titleReset] = useInput();
   const [body, bodyHandler, bodyReset] = useInput();
   const [serch, serchHandler, serchReset] = useInput();
 
   const inputData = {
     id: Date.now(),
+    username: user,
     title: title,
     body: body,
     time: new Date(),
@@ -35,7 +37,7 @@ const Update = () => {
     }
     titleReset();
     bodyReset();
-    // navigate("/");
+    navigate("/");
   };
 
   const deleteHandler = (id) => {
@@ -77,7 +79,16 @@ const Update = () => {
           onSubmitHandler(inputData);
         }}
       >
-        <label for="name">이름:</label>
+        <label for="name">작성자:</label>
+        <input //
+          id="name"
+          type="text"
+          value={user}
+          onChange={userHandler}
+          placeholder="3글자이상입력해"
+          required
+        />
+        <label for="name">제목:</label>
         <input //
           id="name"
           type="text"
@@ -100,14 +111,14 @@ const Update = () => {
         </button>
       </form>
 
-      <input
+      {/* <input
         type="text"
         value={serch}
         onChange={serchHandler}
         onKeyPress={handleKeyPress}
       />
-      <button onClick={() => handleSearchClick()}>이름조회하기</button>
-      <div>
+      <button onClick={() => handleSearchClick()}>이름조회하기</button> */}
+      {/* <div>
         {todos.map((todo) => (
           <div kye={todo.id}>
             id: {todo.id} 이름: {todo.title} 내용: {todo.body}
@@ -126,7 +137,7 @@ const Update = () => {
             </button>
           </div>
         ))}
-      </div>
+      </div> */}
     </>
   );
 };
