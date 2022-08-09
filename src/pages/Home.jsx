@@ -26,12 +26,12 @@ const Home = () => {
         <NavBoxItem>
           <NavInput type="text" />
           <NavButtonGroup>
-            <span class="material-symbols-outlined">search</span>
+            <span className="material-symbols-outlined">search</span>
             <span
               onClick={() => {
                 navigate("/Update");
               }}
-              class="material-symbols-outlined"
+              className="material-symbols-outlined"
             >
               add_box
             </span>
@@ -40,14 +40,20 @@ const Home = () => {
       </NavBox>
       <Container>
         {todos.map((todo) => (
-          <Card kye={todo.id}>
+          <Card key={todo.id}>
             <CardImg></CardImg>
             <CardInfo>
               <CardTitle>
-                <div onClick={()=>{navigate(`/deatail/${todo.id}`)}}>{todo.title}</div>
+                <div
+                  onClick={() => {
+                    navigate(`/deatail/${todo.id}`);
+                  }}
+                >
+                  {todo.title}
+                </div>
                 <span
                   onClick={() => deleteHandler(todo.id)}
-                  class="material-symbols-outlined"
+                  className="material-symbols-outlined"
                 >
                   delete
                 </span>
@@ -56,17 +62,17 @@ const Home = () => {
             <IconBox>
               <Ul>
                 <Li>
-                  <span class="material-symbols-outlined">favorite</span>
+                  <span className="material-symbols-outlined">favorite</span>
                 </Li>
                 <Li>
-                  <span class="material-symbols-outlined">maps_ugc</span>
+                  <span className="material-symbols-outlined">maps_ugc</span>
                 </Li>
               </Ul>
-            </IconBox>{" "}
+            </IconBox>
             <InfoBox>
-              <p>
+              <div>
                 <div>{timeForToday(todo.time)}</div>
-              </p>
+              </div>
               <Info>
                 <span>{todo.username}</span> {todo.body}
               </Info>
