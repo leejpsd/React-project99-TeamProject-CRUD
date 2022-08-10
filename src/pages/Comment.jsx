@@ -12,9 +12,9 @@ const Comment = ({ userData }) => {
   const { comments } = useSelector((state) => state.comments);
   const { username } = userData;
 
-  useEffect(() => {
-    dispatch(__getComments());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(__getComments());
+  // }, []);
 
   const commentData = {
     username: username,
