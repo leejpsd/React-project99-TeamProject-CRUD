@@ -34,13 +34,13 @@ const EditPage = () => {
       }}
     >
       <input //
-        value={title}
+        defaultValue={title}
         type="text"
         onChange={titleHandler}
       />
       <input //
         name="body"
-        value={body}
+        defaultValue={body}
         type="text"
         onChange={bodyHandler}
       />
