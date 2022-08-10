@@ -13,7 +13,7 @@ const Deatail = () => {
   const [editBodyValue, setBodyValue] = useState("");
   const { id } = useParams();
   const getValue = todos.filter((item) => item.id == id);
-
+  console.log(getValue);
   const changeModeHandler = () => {
     setEditMode(true);
   };
@@ -25,6 +25,7 @@ const Deatail = () => {
     dispatch(__getTodos());
     console.log(todos);
   }, []);
+  
   console.log(todos);
   const onSubmitHandler = () => {
     dispatch(
@@ -55,7 +56,7 @@ const Deatail = () => {
                   <img
                     src={item.img}
                     alt=""
-                    style={{ margin: "20px 0px 20px 0px" }}
+                    style={{ margin: "20px 0px 20px 0px", width:"100%" }}
                   />
                   <h5 style={{ fontSize: "14px", fontWeight: "300" }}>
                     {item.body}
@@ -84,12 +85,12 @@ const Deatail = () => {
                   <img
                     src={item.img}
                     alt=""
-                    style={{ margin: "20px 0px 20px 0px" }}
+                    style={{ margin: "20px 0px 20px 0px", width:"100%" }}
                   />
                   <div>
                     <BodyInput
                       type="text"
-                      defaultValueue={editBodyValue}
+                      value={editBodyValue}
                       onChange={(e) => setBodyValue(e.target.value)}
                     />
                   </div>

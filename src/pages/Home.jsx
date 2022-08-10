@@ -6,7 +6,7 @@ import { __deleteTodos } from "../redux/modules/todos";
 import styled from "styled-components";
 import { timeForToday } from "./Time";
 import Update from "./Update";
-import { __getComents, __postComents } from "../redux/modules/coment";
+import { __deleteComents, __getComents, __postComents } from "../redux/modules/coment";
 
 const Coments = ({ comentid }) => {
   const { coments } = useSelector((state) => state.coment);
@@ -15,14 +15,18 @@ const Coments = ({ comentid }) => {
     dispatch(__getComents());
   }, []);
 
+  const deleteHandler = (id) => {
+    dispatch(__deleteComents(id))
+  }
+
   return (
     <div>
       {coments.map((item) => {
         if (item.todoId == comentid) {
           return (
-            <div key={item.id}>
+            <div key={item.id} style={{display:'flex', justifyContent:"space-between", borderBottom:"1px solid #ddd"}}>
               <ComentsText>{item.coment}</ComentsText>
-              {/* <img style={{ width: '20px' }} src="images/trash.png"/> */}
+              <span style={{cursor:"pointer"}} onClick={()=>deleteHandler(item.id)}>x</span>
             </div>
           );
         }
@@ -34,7 +38,6 @@ const Coments = ({ comentid }) => {
 const ComentsText = styled.p`
   font-size: 14px;
   line-height: 24px;
-  border-bottom: 1px solid #ddd;
 `;
 
 const Home = ({ isDarkMode, toggleDarkMode }) => {
@@ -60,8 +63,13 @@ const Home = ({ isDarkMode, toggleDarkMode }) => {
   };
 
   const submitComent = () => {
-    dispatch(__postComents(post));
-  };
+    if (comentValue.trim() === "") {
+      alert('내용을 작성하세요.')
+      return false
+    }
+    dispatch(__postComents(post))
+    setComentValue("")
+  }
 
   useEffect(() => {
     dispatch(__getTodos());
@@ -110,9 +118,9 @@ const Home = ({ isDarkMode, toggleDarkMode }) => {
                     }}
                   >
                     <Title>{todo.title}</Title>
-                    <p style={{ fontSize: "14px", marginBottom: "5px" }}>
+                    <Body style={{ fontSize: "14px", marginBottom: "5px", }}>
                       {todo.body}
-                    </p>
+                    </Body>
                     <span style={{ fontSize: "14px" }}>{todo.username}</span> /{" "}
                     <Time style={{ fontSize: "14px" }}>
                       {timeForToday(todo.time)}
@@ -146,6 +154,7 @@ const Home = ({ isDarkMode, toggleDarkMode }) => {
                   setComentValue(e.target.value);
                 }}
                 placeholder="댓글을 입력하세요."
+                value={comentValue}
               />
               <ComentsButton onClick={submitComent}>작성</ComentsButton>
             </div>
@@ -173,6 +182,7 @@ const Container = styled.section`
   display: flex;
   box-shadow: 0 1px 6px 0 rgba(32, 33, 36, 0.28);
 `;
+
 const Nav = styled.nav`
   width: 350px;
   height: 100%;
@@ -252,6 +262,13 @@ const Title = styled.h5`
   font-weight: 500;
   line-height: 25px;
 `;
+
+const Body = styled.p`
+  width: 300px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+`
 const Time = styled.span`
   text-align: right;
 `;
