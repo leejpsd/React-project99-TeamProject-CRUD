@@ -10,57 +10,12 @@ import {
   __deleteComents,
   __getComents,
   __postComents,
-} from "../redux/modules/coment";
+} from "../redux/modules/comments";
+import Comment from "./Comment";
 
-const Coments = ({ comentid }) => {
-  const { coments } = useSelector((state) => state.coment);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(__getComents());
-  }, []);
-
-  const deleteHandler = (id) => {
-    dispatch(__deleteComents(id));
-  };
-
-  return (
-    <div>
-      {coments.map((item) => {
-        if (item.todoId == comentid) {
-          return (
-            <div
-              key={item.id}
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                borderBottom: "1px solid #ddd",
-              }}
-            >
-              <ComentsText>{item.coment}</ComentsText>
-              <span
-                style={{ cursor: "pointer" }}
-                onClick={() => deleteHandler(item.id)}
-              >
-                x
-              </span>
-            </div>
-          );
-        }
-      })}
-    </div>
-  );
-};
-
-const ComentsText = styled.p`
-  font-size: 14px;
-  line-height: 24px;
-`;
-
-const Home = ({ isDarkMode, toggleDarkMode }) => {
+const Home = () => {
+  const [userData, setUserData] = useState({});
   const { todos } = useSelector((state) => state.todos);
-  const [comentValue, setComentValue] = useState("");
-  const [todosID, SetTodosID] = useState(0);
-  const [comentMode, setComentMode] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -68,123 +23,90 @@ const Home = ({ isDarkMode, toggleDarkMode }) => {
     dispatch(__deleteTodos(id));
   };
 
-  const showComentHandler = (id) => {
-    setComentMode(!comentMode);
-    SetTodosID(id);
-  };
-
-  let post = {
-    todoId: todosID,
-    coment: comentValue,
-  };
-
-  const submitComent = () => {
-    if (comentValue.trim() === "") {
-      alert("내용을 작성하세요.");
-      return false;
-    }
-    dispatch(__postComents(post));
-    setComentValue("");
+  const ComentHandler = (todo) => {
+    setUserData(todo);
   };
 
   useEffect(() => {
     dispatch(__getTodos());
   }, []);
-
-  // function ThemeToggle({ toggle, mode }) {
-  //   console.log("Click");
-  //   return (
-
-  //   );
-  // }
-
   return (
-    <Wrap>
-      <Container>
-        <Nav>
-          <Logo>
-            <LogoSpan>Board List</LogoSpan>
-            {/* <LogoSpan>List</LogoSpan> */}
-          </Logo>
-          <Update></Update>
-        </Nav>
-        <Section>
-          <SearchWrap>
-            <Search type="text" placeholder="검색어를 입력하세요." />
-            <SearchButton style={{ color: "#fff" }}>
-              <img
-                style={{ width: "48%", marginRight: "5px" }}
-                src="images/search.png"
-              />
-            </SearchButton>
-          </SearchWrap>
-          <div>
-            {todos.length == 0 ? (
-              <p style={{ color: "#777777", textAlign: "center" }}>
-                Todo List를 추가해주세요.
-              </p>
-            ) : (
-              todos.map((todo) => (
-                <Card key={todo.id}>
-                  <ImgWrap
-                    style={{
-                      backgroundImage: "url(" + todo.img + ")",
-                    }}
-                  ></ImgWrap>
-                  <TextWrap
-                    onClick={() => {
-                      navigate(`/deatail/${todo.id}`);
-                    }}
-                  >
-                    <Title>{todo.title}</Title>
-                    <Body style={{ fontSize: "14px", marginBottom: "5px" }}>
-                      {todo.body}
-                    </Body>
-                    <span style={{ fontSize: "14px" }}>{todo.username}</span> /{" "}
-                    <Time style={{ fontSize: "14px" }}>
-                      {timeForToday(todo.time)}
-                    </Time>
-                  </TextWrap>
-
-                  <ButtonContainer>
-                    <DeleteButton>
-                      <img
-                        style={{ width: "100%" }}
-                        src="images/trash.png"
-                        onClick={() => deleteHandler(todo.id)}
-                      />
-                    </DeleteButton>
-                    <ChatButton>
-                      <img
-                        style={{ width: "100%" }}
-                        src="images/coment.png"
-                        onClick={() => showComentHandler(todo.id)}
-                      />
-                    </ChatButton>
-                  </ButtonContainer>
-                </Card>
-              ))
-            )}
-          </div>
-        </Section>
-        <Info>
-          {comentMode === true ? (
+    <body>
+      <Wrap>
+        <Container>
+          <Nav>
+            <Logo>
+              <LogoSpan>Board List</LogoSpan>
+              {/* <LogoSpan>List</LogoSpan> */}
+            </Logo>
+            <Update></Update>
+          </Nav>
+          <Section>
+            <SearchWrap>
+              <Search type="text" placeholder="검색어를 입력하세요." />
+              <SearchButton style={{ color: "#fff" }}>
+                <img
+                  style={{ width: "48%", marginRight: "5px" }}
+                  src="images/search.png"
+                />
+              </SearchButton>
+            </SearchWrap>
             <div>
-              <Coments comentid={todosID} />
-              <ComentsInput
-                type="text"
-                onChange={(e) => {
-                  setComentValue(e.target.value);
-                }}
-                placeholder="댓글을 입력하세요."
-                value={comentValue}
-              />
-              <ComentsButton onClick={submitComent}>작성</ComentsButton>
+              {todos.length == 0 ? (
+                <p style={{ color: "#777777", textAlign: "center" }}>
+                  Todo List를 추가해주세요.
+                </p>
+              ) : (
+                todos.map((todo) => (
+                  <Card key={todo.id}>
+                    <ImgWrap
+                      style={{
+                        backgroundImage: "url(" + todo.img + ")",
+                      }}
+                    ></ImgWrap>
+                    <TextWrap
+                      onClick={() => {
+                        navigate(`/deatail/${todo.id}`);
+                      }}
+                    >
+                      <Title>{todo.title}</Title>
+                      <Body style={{ fontSize: "14px", marginBottom: "5px" }}>
+                        {todo.body}
+                      </Body>
+                      <span style={{ fontSize: "14px" }}>{todo.username}</span>{" "}
+                      /{" "}
+                      <Time style={{ fontSize: "14px" }}>
+                        {timeForToday(todo.time)}
+                      </Time>
+                    </TextWrap>
+
+                    <ButtonContainer>
+                      <DeleteButton>
+                        <img
+                          style={{ width: "100%" }}
+                          src="images/trash.png"
+                          onClick={() => deleteHandler(todo.id)}
+                        />
+                      </DeleteButton>
+                      <ChatButton>
+                        <img
+                          style={{ width: "100%" }}
+                          src="images/coment.png"
+                          onClick={() => ComentHandler(todo)}
+                        />
+                      </ChatButton>
+                    </ButtonContainer>
+                  </Card>
+                ))
+              )}
             </div>
-          ) : null}
-        </Info>
-      </Container>
-    </Wrap>
+          </Section>
+          <Info>
+            <Comment key={todos.id} userData={userData} />
+          </Info>
+        </Container>
+      </Wrap>
+    </body>
   );
 };
 
@@ -192,7 +114,25 @@ const Wrap = styled.div`
   max-width: 100vw;
   height: 100vh;
   display: flex;
-  background-color: #dfe4f5;
+  background: -moz-linear-gradient(
+    -45deg,
+    #183850 0,
+    #183850 25%,
+    #192c46 50%,
+    #22254c 75%,
+    #22254c 100%
+  );
+  background: -webkit-linear-gradient(
+    -45deg,
+    #183850 0,
+    #183850 25%,
+    #192c46 50%,
+    #22254c 75%,
+    #22254c 100%
+  );
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  /* background-color: #dfe4f5; */
   position: relative;
 `;
 
@@ -287,7 +227,6 @@ const SearchButton = styled.button`
 
 const Info = styled.div`
   width: 330px;
-  padding: 48px;
 `;
 
 const Card = styled.div`
@@ -360,7 +299,7 @@ const DeleteButton = styled.button`
 `;
 
 const ChatButton = styled.button`
-  width: 20px;
+  width: 25px;
   background: transparent;
   margin-left: auto;
   padding: 0;
@@ -383,28 +322,6 @@ const ComentsButton = styled.button`
   color: #fff;
   padding: 0px 5px 0px 5px;
   border-radius: 5px;
-`;
-
-const ToggleWrapper = styled.button`
-  position: fixed;
-  z-index: 999999;
-  bottom: 4%;
-  right: 3%;
-
-  background-color: ${(props) => props.theme.bgColor};
-  border: ${(props) => props.theme.borderColor};
-  font-size: 20px;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 96px;
-  height: 48px;
-  border-radius: 30px;
-  box-shadow: ${(props) =>
-    props.mode === "dark"
-      ? "0px 5px 10px rgba(40, 40, 40, 1), 0px 2px 4px rgba(40, 40, 40, 1)"
-      : "0 5px 10px rgba(100, 100, 100, 0.15), 0 2px 4px rgba(100, 100, 100, 0.15)"};
 `;
 
 export default Home;
