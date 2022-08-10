@@ -3,8 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams, Link } from "react-router-dom";
 import styled from "styled-components";
 import { __editTodos } from "../redux/modules/todos";
-import theme from "../styledcomponents/theme";
-import CustomButton from "../custom/CustomButton";
 
 const EditContainer = styled.div`
   width: 100%;
@@ -30,12 +28,12 @@ const LinkContainer = styled.div`
 `;
 
 const EditNinknameSpan = styled.span`
-  color: ${theme.colors.black};
-  font-size: ${theme.fontSizes.nickname};
+  color: black;
+  font-size: 20px;
 `;
 
 const EditTitleSpan = styled.span`
-  font-size: ${theme.fontSizes.title};
+  font-size: 20px;
 `;
 
 const EditTitleBodyContainer = styled.div`
