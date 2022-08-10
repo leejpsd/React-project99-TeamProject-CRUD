@@ -71,7 +71,7 @@ const Container = styled.section`
   border-radius: 10px;
   background-color: #fff;
   display: flex;
-  box-shadow: 0px 2px 20px #a7a7a7;
+  box-shadow: 0 1px 6px 0 rgba(32, 33, 36, .28);
 `
 const Nav = styled.nav`
   width:350px;
@@ -100,7 +100,7 @@ const SearchWrap = styled.div`
   background-color: #fff;
   margin-bottom:20px;
   border-radius: 50px;
-  box-shadow: 0 0 10px 0px #a7a7a7;
+  box-shadow: 0 1px 6px 0 rgba(32, 33, 36, .28);
 `
 
 const Search = styled.input`
