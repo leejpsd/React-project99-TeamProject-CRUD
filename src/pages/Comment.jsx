@@ -10,13 +10,14 @@ const Comment = ({ userData }) => {
   const [commentName, commentNameHandler, commentNameReset] = useInput();
   const [comment, commentHandler, commentReset] = useInput();
   const { comments } = useSelector((state) => state.comments);
+  const { username } = userData;
 
   useEffect(() => {
     dispatch(__getComments());
   }, []);
 
   const commentData = {
-    id: userData.id,
+    username: username,
     commentName: commentName,
     comment: comment,
     time: new Date(),
@@ -61,10 +62,16 @@ const Comment = ({ userData }) => {
         </CommentInput>
       </CommentInputBox>
       <CommentBox>
-        //여기서 comment.id 랑 프롭스로받은 id랑 일치하는 경우 보여줌
-        {comments.map((comment) => (
-          <div> </div>
-        ))}
+        {comments.map((item) => {
+          if (item.username === username) {
+            return (
+              <div>
+                {item.commentName}
+                {item.comment}
+              </div>
+            );
+          }
+        })}
       </CommentBox>
     </CommnetLayout>
   );

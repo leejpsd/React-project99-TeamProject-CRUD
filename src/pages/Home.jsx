@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { __getTodos } from "../redux/modules/todos";
+
 import { __deleteTodos } from "../redux/modules/todos";
 import styled from "styled-components";
 import { timeForToday } from "./Time";
@@ -15,13 +16,7 @@ const Home = () => {
   const dispatch = useDispatch();
 
   const ComentHandler = (todo) => {
-    setUserData({
-      id: todo.id,
-      username: todo.username,
-      title: todo.title,
-      body: todo.body,
-      img: todo.body,
-    });
+    setUserData(todo);
   };
 
   const deleteHandler = (id) => {
@@ -76,13 +71,15 @@ const Home = () => {
                   <DeleteButton onClick={() => deleteHandler(todo.id)}>
                     <img style={{ width: "100%" }} src="images/trash.png" />
                   </DeleteButton>
-                  <button onClick={ComentHandler(todo)}>댓글</button>
+                  <button onClick={() => ComentHandler(todo)}>댓글</button>
                 </Card>
               ))
             )}
           </div>
         </Section>
-        <Info>{/* <Comment key={userData.id} userData={userData} /> */}</Info>
+        <Info>
+          <Comment key={todos.id} userData={userData} />
+        </Info>
       </Container>
       <Addbutton
         onClick={() => {

@@ -53,6 +53,7 @@ export const __editTodos = createAsyncThunk(
   }
 );
 
+
 const initialState = {
   todos: [],
   isLoading: false,
@@ -65,9 +66,9 @@ export const todosSlice = createSlice({
   initialState,
   reducers: {
     serchTodos: (state, action) => {
-      console.log(action.payload)
       state.todos = state.todos.filter((todo)=>todo.title === action.payload)
-    }
+    },
+
   },
   extraReducers: { 
   [__getTodos.pending]: (state) => {
@@ -103,5 +104,5 @@ export const todosSlice = createSlice({
 }
 );
 
-export const {serchTodos} = todosSlice.actions;
+export const {serchTodos, stateTodo} = todosSlice.actions;
 export default todosSlice.reducer; 
