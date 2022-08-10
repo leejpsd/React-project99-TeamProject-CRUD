@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import comments from "../modules/comments"
 import todos from "../modules/todos";
+import comments from "../modules/comments";
 
 const store = configureStore({
-  reducer: { todos: todos, comments: comments },
+  reducer: { todos, comments },
 });
 
 export default store;
