@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import useInput from "../hooks/useInput";
 import { __getTodos, __serchTodos } from "../redux/modules/todos";
@@ -6,21 +6,44 @@ import { __postTodos } from "../redux/modules/todos";
 import { __deleteTodos } from "../redux/modules/todos";
 import { serchTodos } from "../redux/modules/todos";
 import { useNavigate } from "react-router-dom";
+import theme from "../styledcomponents/theme";
 import styled from "styled-components";
-import "../css/main.css";
 
 const Update = () => {
+  const [imgBase64, setImgBase64] = useState("images/upload.jpg"); // 파일 base64
+  const [imgFile, setImgFile] = useState(null);	//파일	
+  const [imgVaule, setImgVaule] = useState("")
+  const handleChangeFile = (event) => {
+    setImgVaule(event.target.value)
+    let reader = new FileReader();
+
+    reader.onloadend = () => {
+      // 2. 읽기가 완료되면 아래코드가 실행됩니다.
+      const base64 = reader.result;
+      if (base64) {
+        setImgBase64(base64.toString()); // 파일 base64 상태 업데이트
+      }
+    }
+    if (event.target.files[0]) {
+      reader.readAsDataURL(event.target.files[0]); // 1. 파일을 읽어 버퍼에 저장합니다.
+      setImgFile(event.target.files[0]); // 파일 상태 업데이트
+    }
+  }
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { isLoading, error, todos } = useSelector((state) => state.todos);
+  const [user, userHandler, userReset] = useInput();
   const [title, titleHandler, titleReset] = useInput();
   const [body, bodyHandler, bodyReset] = useInput();
   const [serch, serchHandler, serchReset] = useInput();
 
   const inputData = {
     id: Date.now(),
+    username: user,
     title: title,
     body: body,
+    img: imgBase64,
     time: new Date(),
   };
 
@@ -35,7 +58,7 @@ const Update = () => {
     }
     titleReset();
     bodyReset();
-    // navigate("/");
+    navigate("/");
   };
 
   const deleteHandler = (id) => {
@@ -70,107 +93,135 @@ const Update = () => {
   }
   return (
     <>
-      <form
+      <InputForm
         onSubmit={(e) => {
           e.preventDefault();
           e.target.reset();
           onSubmitHandler(inputData);
         }}
       >
-        <label for="name">이름:</label>
-        <input //
+        <PrewImgWrap style={{backgroundImage: "url(" + imgBase64 + ")"}}>
+        </PrewImgWrap>
+
+        <FileWrap>
+          <FileSrc value={imgVaule} placeholder="첨부파일" />
+          <InputFile for="file">파일</InputFile> 
+          <HideFile type="file" name="imgFile" id="file" onChange={handleChangeFile}/>
+        </FileWrap>
+        
+        <InputName //
+          id="name"
+          type="text"
+          value={user}
+          onChange={userHandler}
+          placeholder="닉네임을 입력하세요."
+          required
+        />
+
+        <InputName //
           id="name"
           type="text"
           value={title}
           onChange={titleHandler}
-          placeholder="3글자이상입력해"
+          placeholder="제목을 입력하세요."
           required
         />
-        <label for="data">내용:</label>
-        <input //
+
+        <InputText //
           id="data"
           type="text"
           value={body}
           onChange={bodyHandler}
-          placeholder="5글자이상입력해"
+          placeholder="내용을 입력해주세요."
           required
         />
-        <button type="submit" disabled={title.length < 1 || body.length < 1}>
+        <SubmitButton type="submit" disabled={title.length < 1 || body.length < 1}>
           추가하기
-        </button>
-      </form>
-
-      <input
-        type="text"
-        value={serch}
-        onChange={serchHandler}
-        onKeyPress={handleKeyPress}
-      />
-      <button onClick={() => handleSearchClick()}>이름조회하기</button>
-      <div>
-        {todos.map((todo) => (
-          <div kye={todo.id}>
-            id: {todo.id} 이름: {todo.title} 내용: {todo.body}
-            {todo.time}
-            <button onClick={() => deleteHandler(todo.id)}> 삭제하기 </button>
-            <button
-              onClick={() => {
-                navigate("/EditPage", {
-                  state: {
-                    id: todo.id,
-                  },
-                });
-              }}
-            >
-              수정하기
-            </button>
-          </div>
-        ))}
-      </div>
+        </SubmitButton>
+      </InputForm>
     </>
   );
 };
 
 export default Update;
 
-const NavBox = styled.nav`
-  /* position: fixed; */
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 50px;
-  background: gray;
-  border-bottom: 1px solid #dfdfdf;
-  display: flex;
-  justify-content: center;
-  padding: 5px 0;
-  align-items: center;
-  border: solid red 2px;
-`;
-const NavBoxItem = styled.nav`
-  width: 20%;
-  max-width: 1000px;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: solid red 1px;
-`;
-const NavInput = styled.input`
-  width: 200px;
-  height: 25px;
-  background: #fafafa;
-  border: 1px solid #dfdfdf;
-  border-radius: 2px;
-  color: rgba(0, 0, 0, 0.5);
-  text-align: center;
-`;
 
-const NavButtonGroup = styled.div`
-  padding: 0;
-  margin-left: 10px;
+const InputForm = styled.form`
+  margin-top: 40px;
+`
+
+const InputName = styled.input`
+  width:100%;
+  border-radius: 50px;
+  padding: 10px;
+  border: 1px solid #5060ff;
+  margin-bottom: 10px;
+`
+
+const InputText = styled.textarea`
+  width: 100%;
+  min-height: 100px;
+  border: 1px solid #5060ff;
+  border-radius: 10px;
+  resize: none;
+  padding: 10px;
+`
+
+const FileWrap = styled.div`
+  width: 100%;
   display: flex;
-  justify-content: space-around;
-  width: 80px;
-  border: solid red 1px;
-`;
+  margin-bottom: 10px;
+`
+
+const FileSrc = styled.input`
+  border-radius: 20px 0px 0px 20px;
+  padding: 10px;
+  border: 1px solid #5060ff;
+`
+
+const HideFile = styled.input`
+    position: absolute;
+    width: 0;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+`
+
+const InputFile = styled.label`
+    width: 100%;
+    color: #fff;
+    font-size: 14px;
+    padding-left: 8px;
+    line-height: 37px;
+    background-color: #5060ff;
+    cursor: pointer;
+    font-family: 'Noto Sans KR', sans-serif;
+    border-radius: 0px 20px 20px 0px;
+`
+
+const PrewImgWrap = styled.div`
+  width:100%;
+  height:140px;
+  background-position: center center;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  border: 1px solid #dddddd;
+  overflow: hidden;
+  margin-bottom: 10px;
+`
+
+const SubmitButton = styled.button`
+  width:100%;
+  border-radius: 50px;
+  padding: 10px;
+  color: #fff;
+  margin-top: 20px;
+  background-color: #7884fb;
+  transition: 0.5s all;
+  font-size:14px;
+  cursor: pointer;
+  &:hover{
+    background-color: #5060ff;
+  }
+`
