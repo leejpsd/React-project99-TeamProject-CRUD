@@ -29,6 +29,7 @@ const Deatail = () => {
     const onSubmitHandler = () => {
         dispatch(__editTodos({ id: Number(id), title: editTitleValue, body: editBodyValue }))
         setEditMode(false)
+        navigate('/')
     }
     return (
         <Wrap>
