@@ -1,20 +1,74 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { __getTodos } from "../redux/modules/todos";
+import { __getTodos, __postTodos } from "../redux/modules/todos";
 import { __deleteTodos } from "../redux/modules/todos";
 import styled from "styled-components";
 import { timeForToday } from "./Time";
 import Update from "./Update";
+import coment from "../redux/modules/coment";
+import { __getComents, __postComents } from "../redux/modules/coment";
+
+
+const Coments = ({ comentid }) => {
+  console.log(comentid)
+  const { coments } = useSelector((state) => state.coment);
+  console.log(coments)
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(__getComents());
+  }, []);
+
+  return (
+    <div>
+      {coments.map((item)=>{
+        if(item.todoId == comentid){
+          return (
+            <div>
+              <ComentsText>{item.coment}</ComentsText>
+              {/* <img style={{ width: '20px' }} src="images/trash.png"/> */}
+            </div>
+          )
+        }
+      })}
+    </div>
+  )
+}
+
+const ComentsText = styled.p`
+  font-size: 14px;
+  line-height: 24px;
+  border-bottom: 1px solid #ddd;
+`
 
 const Home = () => {
   const { todos } = useSelector((state) => state.todos);
+  const [comentValue, setComentValue] = useState("")
+  const [todosID, SetTodosID] = useState(0)
+  const [comentMode, setComentMode] = useState(false)
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const deleteHandler = (id) => {
     dispatch(__deleteTodos(id));
   };
+
+  const showComentHandler = (id) => {
+    setComentMode(!comentMode)
+    SetTodosID(id)
+  }
+
+  let post = {
+    todoId: todosID,
+    coment: comentValue,
+  }
+
+  const submitComent = () => {
+    dispatch(__postComents(post))
+  }
+
+  console.log(comentValue)
+  console.log(todosID)
 
   useEffect(() => {
     dispatch(__getTodos());
@@ -29,29 +83,41 @@ const Home = () => {
         </Nav>
         <Section>
           <SearchWrap>
-            <Search type="text" placeholder="검색어를 입력하세요."/>
-            <SearchButton style={{color:"#fff"}}><img style={{width:'48%', marginRight:"5px"}} src="images/search.png" /></SearchButton>
+            <Search type="text" placeholder="검색어를 입력하세요." />
+            <SearchButton style={{ color: "#fff" }}><img style={{ width: '48%', marginRight: "5px" }} src="images/search.png" /></SearchButton>
           </SearchWrap>
           <div>
-            {todos.length == 0 ? <p style={{color:"#777777", textAlign: "center"}}>Todo List를 추가해주세요.</p> : 
+            {todos.length == 0 ? <p style={{ color: "#777777", textAlign: "center" }}>Todo List를 추가해주세요.</p> :
               todos.map((todo) => (
                 <Card>
-                  <ImgWrap style={{backgroundImage: "url(" + todo.img + ")"}}>
+                  <ImgWrap style={{ backgroundImage: "url(" + todo.img + ")" }}>
                   </ImgWrap>
                   <TextWrap onClick={() => { navigate(`/deatail/${todo.id}`); }}>
                     <Title>{todo.title}</Title>
-                    <p style={{fontSize:"14px", marginBottom: "5px"}}>{todo.body}</p>
+                    <p style={{ fontSize: "14px", marginBottom: "5px" }}>{todo.body}</p>
                     <span style={{ fontSize: "14px" }}>{todo.username}</span> / <Time style={{ fontSize: "14px" }}>{timeForToday(todo.time)}</Time>
                   </TextWrap>
-                  <DeleteButton onClick={() => deleteHandler(todo.id)}><img style={{width:'100%'}} src="images/trash.png" /></DeleteButton>
+
+                  <DeleteButton>
+                    <img style={{ width: '100%' }} src="images/trash.png" onClick={() => deleteHandler(todo.id)} />
+                    <img style={{ width: '100%' }} src="images/coment.png" onClick={() => showComentHandler(todo.id)} />
+                  </DeleteButton>
                 </Card>
               ))}
           </div>
-            
+
         </Section>
-        <Info></Info>
+        <Info>
+          {comentMode === true ?
+            <div>
+              <Coments comentid={todosID} />
+              <ComentsInput type="text" onChange={(e) => { setComentValue(e.target.value) }} placeholder="댓글을 입력하세요."/>
+              <ComentsButton onClick={submitComent}>작성</ComentsButton>
+            </div>
+            : null}
+
+        </Info>
       </Container>
-      <Addbutton onClick={() => { navigate("/Update"); }}>Add</Addbutton>
     </Wrap>
   )
 };
@@ -120,6 +186,7 @@ const SearchButton = styled.button`
 
 const Info = styled.div`
   width: 330px;
+  padding: 48px;
 `
 
 const Card = styled.div`
@@ -156,11 +223,14 @@ const Time = styled.span`
 `
 
 const DeleteButton = styled.button`
-  width:15px;
-  height:15px;
+  width:20px;
+  background: transparent;
   margin-left: auto;
   padding: 0;
   border: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   cursor: pointer;
 `
 
@@ -177,5 +247,16 @@ const Addbutton = styled.button`
   bottom: 10px;
   box-shadow: 0px 2px 20px #a7a7a7;
   cursor: pointer;
+`
+
+const ComentsInput = styled.input`
+  border-bottom: 1px solid #7884fb;
+`
+
+const ComentsButton = styled.button`
+  background-color: #7884fb;
+  color:#fff;
+  padding: 0px 5px 0px 5px;
+  border-radius: 5px;
 `
 export default Home;
