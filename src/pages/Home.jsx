@@ -11,9 +11,7 @@ import { __getComents, __postComents } from "../redux/modules/coment";
 
 
 const Coments = ({ comentid }) => {
-  console.log(comentid)
   const { coments } = useSelector((state) => state.coment);
-  console.log(coments)
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(__getComents());
@@ -21,8 +19,8 @@ const Coments = ({ comentid }) => {
 
   return (
     <div>
-      {coments.map((item)=>{
-        if(item.todoId == comentid){
+      {coments.map((item) => {
+        if (item.todoId == comentid) {
           return (
             <div>
               <ComentsText>{item.coment}</ComentsText>
@@ -64,11 +62,13 @@ const Home = () => {
   }
 
   const submitComent = () => {
+    if (comentValue.trim() === "") {
+      alert('내용을 작성하세요.')
+      return false
+    }
     dispatch(__postComents(post))
+    setComentValue("")
   }
-
-  console.log(comentValue)
-  console.log(todosID)
 
   useEffect(() => {
     dispatch(__getTodos());
@@ -94,7 +94,7 @@ const Home = () => {
                   </ImgWrap>
                   <TextWrap onClick={() => { navigate(`/deatail/${todo.id}`); }}>
                     <Title>{todo.title}</Title>
-                    <p style={{ fontSize: "14px", marginBottom: "5px" }}>{todo.body}</p>
+                    <p style={{ width: "300px", whiteSpace: "nowrap", fontSize: "14px", marginBottom: "5px", textOverflow: "ellipsis", overflow: "hidden" }}>{todo.body}</p>
                     <span style={{ fontSize: "14px" }}>{todo.username}</span> / <Time style={{ fontSize: "14px" }}>{timeForToday(todo.time)}</Time>
                   </TextWrap>
 
@@ -111,7 +111,7 @@ const Home = () => {
           {comentMode === true ?
             <div>
               <Coments comentid={todosID} />
-              <ComentsInput type="text" onChange={(e) => { setComentValue(e.target.value) }} placeholder="댓글을 입력하세요."/>
+              <ComentsInput type="text" onChange={(e) => { setComentValue(e.target.value) }} value={comentValue} placeholder="댓글을 입력하세요." />
               <ComentsButton onClick={submitComent}>작성</ComentsButton>
             </div>
             : null}
