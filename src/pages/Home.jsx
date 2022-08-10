@@ -1,18 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { __getTodos, __postTodos } from "../redux/modules/todos";
+import { __getTodos } from "../redux/modules/todos";
 import { __deleteTodos } from "../redux/modules/todos";
 import styled from "styled-components";
 import { timeForToday } from "./Time";
 import Update from "./Update";
-import coment from "../redux/modules/coment";
 import { __getComents, __postComents } from "../redux/modules/coment";
 
 const Coments = ({ comentid }) => {
-  console.log(comentid);
   const { coments } = useSelector((state) => state.coment);
-  console.log(coments);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(__getComents());
@@ -65,9 +62,6 @@ const Home = () => {
   const submitComent = () => {
     dispatch(__postComents(post));
   };
-
-  console.log(comentValue);
-  console.log(todosID);
 
   useEffect(() => {
     dispatch(__getTodos());

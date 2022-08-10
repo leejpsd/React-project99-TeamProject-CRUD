@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import useInput from "../hooks/useInput";
-import { __getTodos, __serchTodos } from "../redux/modules/todos";
+import { __getTodos } from "../redux/modules/todos";
 import { __postTodos } from "../redux/modules/todos";
-import { __deleteTodos } from "../redux/modules/todos";
-import { serchTodos } from "../redux/modules/todos";
 import { useNavigate } from "react-router-dom";
-import theme from "../styledcomponents/theme";
 import styled from "styled-components";
 
 const Update = () => {
@@ -32,11 +29,10 @@ const Update = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isLoading, error, todos } = useSelector((state) => state.todos);
-  const [user, userHandler, userReset] = useInput();
+  const { isLoading, error } = useSelector((state) => state.todos);
+  const [user, userHandler] = useInput();
   const [title, titleHandler, titleReset] = useInput();
   const [body, bodyHandler, bodyReset] = useInput();
-  const [serch, serchHandler, serchReset] = useInput();
 
   const inputData = {
     id: Date.now(),
@@ -61,29 +57,10 @@ const Update = () => {
     navigate("/");
   };
 
-  const deleteHandler = (id) => {
-    dispatch(__deleteTodos(id));
-  };
-
   useEffect(() => {
     dispatch(__getTodos());
   }, []);
 
-  const handleKeyPress = (e) => {
-    if (e.type === "keypress" && e.code === "Enter") {
-      handleSearchClick();
-    }
-  };
-
-  const handleSearchClick = () => {
-    if (serch !== "") {
-      dispatch(serchTodos(serch));
-      console.log(todos);
-    } else if (serch !== todos) {
-      dispatch(__getTodos());
-      console.log(todos);
-    }
-  };
   if (isLoading) {
     return <div>로딩 중....</div>;
   }
