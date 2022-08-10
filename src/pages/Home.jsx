@@ -37,7 +37,7 @@ const ComentsText = styled.p`
   border-bottom: 1px solid #ddd;
 `;
 
-const Home = () => {
+const Home = ({ isDarkMode, toggleDarkMode }) => {
   const { todos } = useSelector((state) => state.todos);
   const [comentValue, setComentValue] = useState("");
   const [todosID, SetTodosID] = useState(0);
@@ -66,6 +66,13 @@ const Home = () => {
   useEffect(() => {
     dispatch(__getTodos());
   }, []);
+
+  // function ThemeToggle({ toggle, mode }) {
+  //   console.log("Click");
+  //   return (
+
+  //   );
+  // }
 
   return (
     <Wrap>
@@ -261,21 +268,6 @@ const DeleteButton = styled.button`
   cursor: pointer;
 `;
 
-const Addbutton = styled.button`
-  width: 170px;
-  height: 55px;
-  border: none;
-  font-size: 16px;
-  background-color: #7884fb;
-  color: #fff;
-  position: fixed;
-  border-radius: 20px;
-  right: 10px;
-  bottom: 10px;
-  box-shadow: 0px 2px 20px #a7a7a7;
-  cursor: pointer;
-`;
-
 const ComentsInput = styled.input`
   border-bottom: 1px solid #7884fb;
 `;
@@ -286,4 +278,27 @@ const ComentsButton = styled.button`
   padding: 0px 5px 0px 5px;
   border-radius: 5px;
 `;
+
+const ToggleWrapper = styled.button`
+  position: fixed;
+  z-index: 999999;
+  bottom: 4%;
+  right: 3%;
+
+  background-color: ${(props) => props.theme.bgColor};
+  border: ${(props) => props.theme.borderColor};
+  font-size: 20px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 96px;
+  height: 48px;
+  border-radius: 30px;
+  box-shadow: ${(props) =>
+    props.mode === "dark"
+      ? "0px 5px 10px rgba(40, 40, 40, 1), 0px 2px 4px rgba(40, 40, 40, 1)"
+      : "0 5px 10px rgba(100, 100, 100, 0.15), 0 2px 4px rgba(100, 100, 100, 0.15)"};
+`;
+
 export default Home;
