@@ -1,111 +1,42 @@
 {
   "comments": [
     {
+      "username": "ㅇㄹㅇㄹㅇ",
       "commentName": "asd",
-      "comment": "ads",
-      "time": "2022-08-10T16:11:10.860Z",
-      "id": 1
+      "comment": "asdads",
+      "time": "2022-08-10T21:10:31.863Z",
+      "id": 21
     },
     {
-      "commentName": "sdf",
-      "comment": "sdf",
-      "time": "2022-08-10T16:11:17.676Z",
-      "id": 2
+      "username": "asdasdasd",
+      "commentName": "이중표",
+      "comment": "안녕하세요 저는 이중표 입니다",
+      "time": "2022-08-10T21:28:30.802Z",
+      "id": 39
     },
     {
-      "commentName": "1111111",
-      "comment": "222222222",
-      "time": "2022-08-10T16:13:47.016Z",
-      "id": 3
+      "username": "asdasdasd",
+      "commentName": "asdasd",
+      "comment": "asdasd",
+      "time": "2022-08-10T21:57:53.461Z",
+      "id": 40
     },
     {
-      "commentName": "33333",
-      "comment": "3333333",
-      "time": "2022-08-10T16:15:23.921Z",
-      "id": 4
-    },
-    {
-      "commentName": "asdads",
-      "comment": "asdasdads",
-      "time": "2022-08-10T16:20:19.586Z",
-      "id": 5
-    },
-    {
-      "id": 6,
-      "commentName": "ㅁㄴㅇㅁㄴㅇ",
-      "comment": "ㅁㅇㄴㅁㄴㅇㅁㅇㄴ",
-      "time": "2022-08-10T16:22:43.604Z"
-    },
-    {
-      "id": "asd",
-      "commentName": "123123",
-      "comment": "123123",
-      "time": "2022-08-10T16:23:59.211Z"
-    },
-    {
-      "id": "이중표",
-      "commentName": "이디야",
-      "comment": "거짓말",
-      "time": "2022-08-10T16:31:10.466Z"
-    },
-    {
-      "id": "리액트고수",
-      "commentName": "스타벅스",
-      "comment": "거짓말",
-      "time": "2022-08-10T16:32:31.644Z"
-    },
-    {
-      "username": "이중표",
-      "commentName": "스타벅스",
-      "comment": "동의",
-      "time": "2022-08-10T16:39:32.197Z",
-      "id": 7
-    },
-    {
-      "username": "이중표",
-      "commentName": "메가커피",
-      "comment": "비동의",
-      "time": "2022-08-10T16:40:24.732Z",
-      "id": 8
-    },
-    {
-      "username": "이중표",
-      "commentName": "컴포즈커피",
-      "comment": "동의",
-      "time": "2022-08-10T16:40:33.248Z",
-      "id": 9
-    },
-    {
-      "username": "리액트고수",
-      "commentName": "빽다방",
-      "comment": "비동의",
-      "time": "2022-08-10T16:40:47.669Z",
-      "id": 10
-    },
-    {
-      "username": "리액트고수",
-      "commentName": "스타벅스 ",
-      "comment": "동의",
-      "time": "2022-08-10T16:40:53.149Z",
-      "id": 11
+      "username": "asdasdasd",
+      "commentName": "asdasd",
+      "comment": "asdasd",
+      "time": "2022-08-10T21:57:57.232Z",
+      "id": 41
     }
   ],
   "todos": [
     {
-      "id": 1660149007972,
-      "username": "이중표",
-      "title": "리액트는",
-      "body": "너무어려워~~",
+      "id": 1660164854291,
+      "username": "asdasdasd",
+      "title": "asdasd",
+      "body": "asdasdasdasdasdasdas",
       "img": "images/upload.jpg",
-      "time": "2022-08-10T16:30:07.972Z"
-    },
-    {
-      "id": 1660149048236,
-      "username": "리액트고수",
-      "title": "리액느는",
-      "body": "너무쉬워~~~",
-      "img": "images/upload.jpg",
-      "time": "2022-08-10T16:30:48.236Z"
+      "time": "2022-08-10T20:54:14.291Z"
     }
   ]
 }
