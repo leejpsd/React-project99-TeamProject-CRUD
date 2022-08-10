@@ -189,11 +189,11 @@ const Chat_thread = styled.ul`
   }
   li:nth-child(odd) {
     float: right;
-    margin-right: 60px;
+    margin-right: 50px;
     color: #079f90;
   }
   li:nth-child(odd):before {
-    right: -60px;
+    right: -50px;
   }
   li:nth-child(odd):after {
     border-right: 15px solid transparent;
@@ -201,11 +201,11 @@ const Chat_thread = styled.ul`
   }
   li:nth-child(even) {
     float: left;
-    margin-left: 60px;
+    margin-left: 50px;
     color: #0ec879;
   }
   li:nth-child(even):before {
-    left: -80px;
+    left: -50px;
   }
   li:nth-child(even):after {
     border-left: 15px solid transparent;
