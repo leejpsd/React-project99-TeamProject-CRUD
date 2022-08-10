@@ -3,12 +3,12 @@ const pixelToRem = (size) => `${size / 16}rem`;
 const fontSizes = {
   title: pixelToRem(60),
   subtitle: pixelToRem(30),
-  paragraph: pixelToRem(18),
+  nickname: pixelToRem(25),
 };
 
 const colors = {
   black: "#000000",
-  white: "ffffff",
+  white: "#ffffff",
 };
 
 const common = {

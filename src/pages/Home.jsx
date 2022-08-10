@@ -5,6 +5,8 @@ import { __getTodos } from "../redux/modules/todos";
 import { __deleteTodos } from "../redux/modules/todos";
 import styled from "styled-components";
 import { timeForToday } from "./Time";
+import CustomButton from "../custom/CustomButton";
+import "./Home.css";
 
 const Home = () => {
   const { todos } = useSelector((state) => state.todos);
@@ -27,14 +29,14 @@ const Home = () => {
           <NavInput type="text" />
           <NavButtonGroup>
             <span className="material-symbols-outlined">search</span>
-            <span
+            {/* <HsmeAddButton
               onClick={() => {
                 navigate("/Update");
               }}
               className="material-symbols-outlined"
             >
-              add_box
-            </span>
+              하하
+            </HsmeAddButton> */}
           </NavButtonGroup>
         </NavBoxItem>
       </NavBox>
@@ -44,19 +46,21 @@ const Home = () => {
             <CardImg></CardImg>
             <CardInfo>
               <CardTitle>
-                <div
+                <CustomButton
+                  className="homebutton"
+                  children={todo.title}
                   onClick={() => {
                     navigate(`/deatail/${todo.id}`);
                   }}
-                >
-                  {todo.title}
-                </div>
-                <span
+                />
+                {/* {todo.title} */}
+                {/* </CustomButton> */}
+                <CustomButton
                   onClick={() => deleteHandler(todo.id)}
                   className="material-symbols-outlined"
                 >
                   delete
-                </span>
+                </CustomButton>
               </CardTitle>
             </CardInfo>
             <IconBox>
