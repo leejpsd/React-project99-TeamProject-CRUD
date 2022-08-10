@@ -173,7 +173,7 @@ const Chat_thread = styled.ul`
     position: relative;
     clear: both;
     display: block;
-    padding: 10px 10px 10px 15px;
+    padding: 10px 8px 10px 10px;
     margin: 0 0 5px 0;
     font: 16px/20px "Noto Sans", sans-serif;
     border-radius: 10px;
