@@ -40,9 +40,9 @@ const Deatail = () => {
                             return (
                                 <div key={item.id}>
                                     <Title>{item.title}</Title>
-                                    <Wrapper><User>작성자 : {item.username}</User> <Link to="/" style={{fontSize:"14px"}}>돌아가기</Link></Wrapper>
-                                    <img src={item.img} alt="" style={{margin:"20px 0px 20px 0px"}}/>
-                                    <h5 style={{fontSize:"14px", fontWeight:"300"}}>{item.body}</h5>
+                                    <Wrapper><User>작성자 : {item.username}</User> <Link to="/" style={{ fontSize: "14px" }}>돌아가기</Link></Wrapper>
+                                    <img src={item.img} alt="" style={{ margin: "20px 0px 20px 0px" }} />
+                                    <h5 style={{ fontSize: "14px", fontWeight: "300" }}>{item.body}</h5>
                                     <SubmitButton onClick={changeModeHandler}>수정하기</SubmitButton>
                                 </div>
                             )
@@ -50,8 +50,8 @@ const Deatail = () => {
                             return (
                                 <div key={item.id}>
                                     <Title><TitleInput type="text" value={editTitleValue} onChange={(e) => setTitleValue(e.target.value)} /></Title>
-                                    <Wrapper><User>작성자 : {item.username}</User> <Link to="/" style={{fontSize:"14px"}}>돌아가기</Link></Wrapper>
-                                    <img src={item.img} alt="" style={{margin:"20px 0px 20px 0px"}}/>
+                                    <Wrapper><User>작성자 : {item.username}</User> <Link to="/" style={{ fontSize: "14px" }}>돌아가기</Link></Wrapper>
+                                    <img src={item.img} alt="" style={{ margin: "20px 0px 20px 0px" }} />
                                     <div><BodyInput type="text" value={editBodyValue} onChange={(e) => setBodyValue(e.target.value)} /></div>
                                     <SubmitButton onClick={onSubmitHandler}>수정완료</SubmitButton>
                                 </div>
