@@ -3,10 +3,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { __getTodos } from "../redux/modules/todos";
 import { __deleteTodos } from "../redux/modules/todos";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { timeForToday } from "./Time";
 import Update from "./Update";
-import { __deleteComents, __getComents, __postComents } from "../redux/modules/coment";
+import {
+  __deleteComents,
+  __getComents,
+  __postComents,
+} from "../redux/modules/coment";
 
 const Coments = ({ comentid }) => {
   const { coments } = useSelector((state) => state.coment);
@@ -16,17 +20,29 @@ const Coments = ({ comentid }) => {
   }, []);
 
   const deleteHandler = (id) => {
-    dispatch(__deleteComents(id))
-  }
+    dispatch(__deleteComents(id));
+  };
 
   return (
     <div>
       {coments.map((item) => {
         if (item.todoId == comentid) {
           return (
-            <div key={item.id} style={{display:'flex', justifyContent:"space-between", borderBottom:"1px solid #ddd"}}>
+            <div
+              key={item.id}
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                borderBottom: "1px solid #ddd",
+              }}
+            >
               <ComentsText>{item.coment}</ComentsText>
-              <span style={{cursor:"pointer"}} onClick={()=>deleteHandler(item.id)}>x</span>
+              <span
+                style={{ cursor: "pointer" }}
+                onClick={() => deleteHandler(item.id)}
+              >
+                x
+              </span>
             </div>
           );
         }
@@ -40,7 +56,7 @@ const ComentsText = styled.p`
   line-height: 24px;
 `;
 
-const Home = () => {
+const Home = ({ isDarkMode, toggleDarkMode }) => {
   const { todos } = useSelector((state) => state.todos);
   const [comentValue, setComentValue] = useState("");
   const [todosID, SetTodosID] = useState(0);
@@ -64,23 +80,31 @@ const Home = () => {
 
   const submitComent = () => {
     if (comentValue.trim() === "") {
-      alert('내용을 작성하세요.')
-      return false
+      alert("내용을 작성하세요.");
+      return false;
     }
-    dispatch(__postComents(post))
-    setComentValue("")
-  }
+    dispatch(__postComents(post));
+    setComentValue("");
+  };
 
   useEffect(() => {
     dispatch(__getTodos());
   }, []);
+
+  // function ThemeToggle({ toggle, mode }) {
+  //   console.log("Click");
+  //   return (
+
+  //   );
+  // }
 
   return (
     <Wrap>
       <Container>
         <Nav>
           <Logo>
-            Todo<span style={{ color: "#000" }}>List</span>
+            <LogoSpan>Board List</LogoSpan>
+            {/* <LogoSpan>List</LogoSpan> */}
           </Logo>
           <Update></Update>
         </Nav>
@@ -103,7 +127,9 @@ const Home = () => {
               todos.map((todo) => (
                 <Card key={todo.id}>
                   <ImgWrap
-                    style={{ backgroundImage: "url(" + todo.img + ")" }}
+                    style={{
+                      backgroundImage: "url(" + todo.img + ")",
+                    }}
                   ></ImgWrap>
                   <TextWrap
                     onClick={() => {
@@ -111,7 +137,7 @@ const Home = () => {
                     }}
                   >
                     <Title>{todo.title}</Title>
-                    <Body style={{ fontSize: "14px", marginBottom: "5px", }}>
+                    <Body style={{ fontSize: "14px", marginBottom: "5px" }}>
                       {todo.body}
                     </Body>
                     <span style={{ fontSize: "14px" }}>{todo.username}</span> /{" "}
@@ -120,18 +146,22 @@ const Home = () => {
                     </Time>
                   </TextWrap>
 
-                  <DeleteButton>
-                    <img
-                      style={{ width: "100%" }}
-                      src="images/trash.png"
-                      onClick={() => deleteHandler(todo.id)}
-                    />
-                    <img
-                      style={{ width: "100%" }}
-                      src="images/coment.png"
-                      onClick={() => showComentHandler(todo.id)}
-                    />
-                  </DeleteButton>
+                  <ButtonContainer>
+                    <DeleteButton>
+                      <img
+                        style={{ width: "100%" }}
+                        src="images/trash.png"
+                        onClick={() => deleteHandler(todo.id)}
+                      />
+                    </DeleteButton>
+                    <ChatButton>
+                      <img
+                        style={{ width: "100%" }}
+                        src="images/coment.png"
+                        onClick={() => showComentHandler(todo.id)}
+                      />
+                    </ChatButton>
+                  </ButtonContainer>
                 </Card>
               ))
             )}
@@ -181,12 +211,46 @@ const Nav = styled.nav`
   height: 100%;
   padding: 48px;
 `;
+
+const typing = keyframes`
+  0% {
+    width: 0%;
+  }
+  50% {
+    width: 100%;
+
+  }
+  100% {
+    width: 100%;
+    border-right: none;
+  }
+`;
+
 const Logo = styled.h1`
   font-family: "Noto Sans KR", sans-serif;
   font-size: 30px;
   font-weight: bold;
   color: #5060ff;
+  display: flex;
+  position: relative;
 `;
+
+const LogoSpan = styled.span`
+  color: transparent;
+  white-space: nowrap;
+  &::before {
+    content: "Board List";
+    position: absolute;
+    color: #5060ff;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-right: 1px solid black;
+    animation: ${typing} 5s steps(31) forwards;
+  }
+`;
+
 const Section = styled.div`
   padding-top: 48px;
   width: 680px;
@@ -232,6 +296,7 @@ const Card = styled.div`
   border-radius: 10px;
   background-color: #fff;
   display: flex;
+  justify-content: space-between;
   padding: 20px;
   margin: 0 auto;
   gap: 20px;
@@ -244,10 +309,16 @@ const ImgWrap = styled.div`
   border-radius: 5px;
   background-size: cover;
   background-position: center center;
+  box-shadow: 2px 4px 2px 2px grey;
 `;
 
 const TextWrap = styled.div`
+  width: 100%;
   cursor: pointer;
+  box-shadow: 2px 4px 2px 2px grey;
+  border-radius: 10px;
+  padding: 0px 5px 0px 5px;
+  border: 1px solid black;
 `;
 
 const Title = styled.h5`
@@ -261,36 +332,46 @@ const Body = styled.p`
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-`
+`;
 const Time = styled.span`
   text-align: right;
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  gap: 10px;
 `;
 
 const DeleteButton = styled.button`
   width: 20px;
   background: transparent;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+  box-shadow: 2px 2px 2px 2px grey;
+  &:hover {
+    transform: rotate(30deg);
+    transition-duration: 0.5s;
+    transition-timing-function: ease-in;
+  }
+  /* animation-duration: 2s; */
+`;
+
+const ChatButton = styled.button`
+  width: 20px;
+  background: transparent;
   margin-left: auto;
   padding: 0;
   border: none;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 2px 2px grey;
   cursor: pointer;
-`;
-
-const Addbutton = styled.button`
-  width: 170px;
-  height: 55px;
-  border: none;
-  font-size: 16px;
-  background-color: #7884fb;
-  color: #fff;
-  position: fixed;
-  border-radius: 20px;
-  right: 10px;
-  bottom: 10px;
-  box-shadow: 0px 2px 20px #a7a7a7;
-  cursor: pointer;
+  &:hover {
+    transform: rotateY(180deg);
+    transition-duration: 0.5s;
+  }
 `;
 
 const ComentsInput = styled.input`
@@ -303,4 +384,27 @@ const ComentsButton = styled.button`
   padding: 0px 5px 0px 5px;
   border-radius: 5px;
 `;
+
+const ToggleWrapper = styled.button`
+  position: fixed;
+  z-index: 999999;
+  bottom: 4%;
+  right: 3%;
+
+  background-color: ${(props) => props.theme.bgColor};
+  border: ${(props) => props.theme.borderColor};
+  font-size: 20px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 96px;
+  height: 48px;
+  border-radius: 30px;
+  box-shadow: ${(props) =>
+    props.mode === "dark"
+      ? "0px 5px 10px rgba(40, 40, 40, 1), 0px 2px 4px rgba(40, 40, 40, 1)"
+      : "0 5px 10px rgba(100, 100, 100, 0.15), 0 2px 4px rgba(100, 100, 100, 0.15)"};
+`;
+
 export default Home;
