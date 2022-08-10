@@ -89,7 +89,7 @@ const Deatail = () => {
                   <div>
                     <BodyInput
                       type="text"
-                      valdefaultValueue={editBodyValue}
+                      defaultValueue={editBodyValue}
                       onChange={(e) => setBodyValue(e.target.value)}
                     />
                   </div>
