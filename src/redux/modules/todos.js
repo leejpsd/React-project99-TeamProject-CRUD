@@ -5,7 +5,9 @@ export const __getTodos = createAsyncThunk(
   "todos/getTodos",
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.get("https://our-todolist.herokuapp.com/todos");
+      const data = await axios.get(
+        "http://reactteamproject.herokuapp.com/todos"
+      );
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -17,7 +19,10 @@ export const __postTodos = createAsyncThunk(
   "todos/postTodos",
   async (inputData, thunkAPI) => {
     try {
-      const data = await axios.post("https://our-todolist.herokuapp.com/todos", inputData);
+      const data = await axios.post(
+        "http://reactteamproject.herokuapp.com/todos",
+        inputData
+      );
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -29,7 +34,7 @@ export const __deleteTodos = createAsyncThunk(
   "todos/deleteTodos",
   async (id, thunkAPI) => {
     try {
-      await axios.delete(`https://our-todolist.herokuapp.com/todos/${id}`);
+      await axios.delete(`http://reactteamproject.herokuapp.com/todos/${id}`);
       return thunkAPI.fulfillWithValue(id);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -42,7 +47,7 @@ export const __editTodos = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const data = await axios.patch(
-        `https://our-todolist.herokuapp.com/todos/${payload.id}`,
+        `http://reactteamproject.herokuapp.com/todos/${payload.id}`,
         {
           title: `${payload.title}`,
           body: `${payload.body}`,

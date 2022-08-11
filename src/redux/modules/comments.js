@@ -1,13 +1,13 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-
-
 export const __getComments = createAsyncThunk(
   "comments/Comments",
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.get("https://our-todolist.herokuapp.com/Comments");
+      const data = await axios.get(
+        "http://reactteamproject.herokuapp.com/Comments"
+      );
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -19,11 +19,14 @@ export const __postComments = createAsyncThunk(
   "comments/postComments",
   async (commentData, thunkAPI) => {
     try {
-      const data = await axios.post("https://our-todolist.herokuapp.com/Comments", commentData);
-    return thunkAPI.fulfillWithValue(data.data);
-  } catch (error) {
-  return thunkAPI.rejectWithValue(error);
-}
+      const data = await axios.post(
+        "http://reactteamproject.herokuapp.com/Comments",
+        commentData
+      );
+      return thunkAPI.fulfillWithValue(data.data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
   }
 );
 
@@ -31,7 +34,9 @@ export const __deleteComment = createAsyncThunk(
   "comment/deleteComment",
   async (id, thunkAPI) => {
     try {
-      await axios.delete(`https://our-todolist.herokuapp.com/Comments/${id}`);
+      await axios.delete(
+        `http://reactteamproject.herokuapp.com/Comments/${id}`
+      );
       return thunkAPI.fulfillWithValue(id);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -39,14 +44,11 @@ export const __deleteComment = createAsyncThunk(
   }
 );
 
-
-
 const initialState = {
   comments: [],
   isLoading: false,
   error: null,
 };
-
 
 export const commentsSlice = createSlice({
   name: "comments",
@@ -65,10 +67,12 @@ export const commentsSlice = createSlice({
       state.error = action.payload; // catch 된 error 객체를 state.error에 넣습니다.
     },
     [__postComments.fulfilled]: (state, action) => {
-      state.comments.push(action.payload)
+      state.comments.push(action.payload);
     },
     [__deleteComment.fulfilled]: (state, action) => {
-      state.comments = state.comments.filter((list) => list.id !== action.payload);
+      state.comments = state.comments.filter(
+        (list) => list.id !== action.payload
+      );
     },
   },
 });
