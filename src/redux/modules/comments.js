@@ -6,7 +6,7 @@ export const __getComments = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const data = await axios.get(
-        "http://reactteamproject.herokuapp.com/Comments"
+        "https://reactteamproject.herokuapp.com/Comments"
       );
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
@@ -20,7 +20,7 @@ export const __postComments = createAsyncThunk(
   async (commentData, thunkAPI) => {
     try {
       const data = await axios.post(
-        "http://reactteamproject.herokuapp.com/Comments",
+        "https://reactteamproject.herokuapp.com/Comments",
         commentData
       );
       return thunkAPI.fulfillWithValue(data.data);
@@ -35,7 +35,7 @@ export const __deleteComment = createAsyncThunk(
   async (id, thunkAPI) => {
     try {
       await axios.delete(
-        `http://reactteamproject.herokuapp.com/Comments/${id}`
+        `https://reactteamproject.herokuapp.com/Comments/${id}`
       );
       return thunkAPI.fulfillWithValue(id);
     } catch (error) {
