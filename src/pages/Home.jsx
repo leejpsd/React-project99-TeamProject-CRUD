@@ -91,13 +91,6 @@ const Home = ({ isDarkMode, toggleDarkMode }) => {
     dispatch(__getTodos());
   }, []);
 
-  // function ThemeToggle({ toggle, mode }) {
-  //   console.log("Click");
-  //   return (
-
-  //   );
-  // }
-
   return (
     <Wrap>
       <Container>
