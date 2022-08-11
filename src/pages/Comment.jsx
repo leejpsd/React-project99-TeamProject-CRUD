@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { __getComments } from "../redux/modules/comments";
 import { __postComments } from "../redux/modules/comments";
+import { __deleteComment } from "../redux/modules/comments";
 import { useSelector, useDispatch } from "react-redux";
 import useInput from "../hooks/useInput";
 import { timeForToday } from "./Time";
@@ -25,18 +26,20 @@ const Comment = ({ userData }) => {
   };
 
   const commentSubmitHandler = () => {
-    if (commentData.commentName.length < 6) {
-      console.log(commentName.length);
-      alert("닉네임을 5글자 이하로 적어주세요.");
-    } else if (commentData.comment.length > 15) {
-      alert("댓글을 15글자 이상 적어주세요");
-    } else {
-      alert("성공");
-      dispatch(__postComments(commentData));
+    if (commentName.length >= 5) {
+      alert('5글자 이하로 입력해주세요.')
+      return
+    } else if (comment.length <= 15) {
+      alert('15글자 이상 입력해주세요.')
+      return
     }
-
+    dispatch(__postComments(commentData));
     commentNameReset();
     commentReset();
+  };
+
+  const deleteHandler = (id) => {
+    dispatch(__deleteComment(id));
   };
 
   return (
@@ -79,6 +82,7 @@ const Comment = ({ userData }) => {
                         {timeForToday(item.time)}
                       </span>
                       <span
+                        onClick={() => deleteHandler(item.id)}
                         style={{
                           fontSize: "10px",
                           marginLeft: "30px",
@@ -137,7 +141,7 @@ const Card = styled.div`
   width: 100%;
   height: 230px;
   margin: 0 auto;
-
+  border-radius: 20px;
   background-color: white;
   -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
@@ -167,15 +171,18 @@ const Photo = styled.div`
   -moz-box-shadow: inset 0px 0px 5px 1px rgba(0, 0, 0, 0.3);
   box-shadow: inset 0px 0px 5px 1px rgba(0, 0, 0, 0.3);
 `;
+
 const Banner = styled.div`
   z-index: 2;
   position: relative;
   margin-top: -154px;
   width: 100%;
   height: 130px;
-  background-image: url("https://snap-photos.s3.amazonaws.com/img-thumbs/960w/RQ2Z75PQIN.jpg");
-  background-size: cover;
-  border-bottom: solid 1px lightgrey;
+  background-color: rgba(120, 132, 251, 0.4);
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  /* border-bottom: solid 1px lightgrey; */
+  border-bottom: 1px solid lightgray;
 `;
 
 const CommentInputBox = styled.div`
