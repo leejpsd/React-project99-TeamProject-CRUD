@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { __getComments } from "../redux/modules/comments";
 import { __postComments } from "../redux/modules/comments";
+import { __deleteComment } from "../redux/modules/comments";
 import { useSelector, useDispatch } from "react-redux";
 import useInput from "../hooks/useInput";
 import { timeForToday } from "./Time";
@@ -25,18 +26,13 @@ const Comment = ({ userData }) => {
   };
 
   const commentSubmitHandler = () => {
-    if (commentData.commentName.length < 6) {
-      console.log(commentName.length);
-      alert("닉네임을 5글자 이하로 적어주세요.");
-    } else if (commentData.comment.length > 15) {
-      alert("댓글을 15글자 이상 적어주세요");
-    } else {
-      alert("성공");
-      dispatch(__postComments(commentData));
-    }
-
+    dispatch(__postComments(commentData));
     commentNameReset();
     commentReset();
+  };
+
+  const deleteHandler = (id) => {
+    dispatch(__deleteComment(id));
   };
 
   return (
@@ -81,6 +77,7 @@ const Comment = ({ userData }) => {
                         {timeForToday(item.time)}
                       </span>
                       <span
+                        onClick={() => deleteHandler(item.id)}
                         style={{
                           fontSize: "10px",
                           marginLeft: "30px",

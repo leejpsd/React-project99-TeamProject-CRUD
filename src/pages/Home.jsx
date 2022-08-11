@@ -6,6 +6,7 @@ import { __deleteTodos } from "../redux/modules/todos";
 import styled, { keyframes } from "styled-components";
 import { timeForToday } from "./Time";
 import Update from "./Update";
+import Comment from "./Comment";
 
 const Home = () => {
   const [userData, setUserData] = useState({});
@@ -152,7 +153,6 @@ const typing = keyframes`
   }
   50% {
     width: 100%;
-
   }
   100% {
     width: 100%;
