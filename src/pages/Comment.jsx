@@ -26,6 +26,13 @@ const Comment = ({ userData }) => {
   };
 
   const commentSubmitHandler = () => {
+    if (commentName.length >= 5) {
+      alert('5글자 이하로 입력해주세요.')
+      return
+    } else if (comment.length <= 15) {
+      alert('15글자 이상 입력해주세요.')
+      return
+    }
     dispatch(__postComments(commentData));
     commentNameReset();
     commentReset();
@@ -40,9 +47,9 @@ const Comment = ({ userData }) => {
       <InfoData>
         <Card>
           <Photo
-                    style={{
-                      backgroundImage: "url(" + userData.img + ")",
-              }}>
+            style={{
+              backgroundImage: "url(" + userData.img + ")",
+            }}>
           </Photo>
           <Banner></Banner>
           <ul>
@@ -168,6 +175,7 @@ const Photo = styled.div`
   -moz-box-shadow: inset 0px 0px 5px 1px rgba(0, 0, 0, 0.3);
   box-shadow: inset 0px 0px 5px 1px rgba(0, 0, 0, 0.3);
 `;
+
 const Banner = styled.div`
   z-index: 2;
   position: relative;
