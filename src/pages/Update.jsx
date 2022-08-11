@@ -45,9 +45,9 @@ const Update = () => {
 
   const onSubmitHandler = (inputData) => {
     if (inputData.title.length < 3) {
-      alert("이름을 3글자 이상 적어라");
+      alert("이름을 3글자 이상 적어주세요");
     } else if (inputData.body.length < 5) {
-      alert("내용을 5글자 이상 적어라");
+      alert("내용을 5글자 이상 적어주세요");
     } else {
       dispatch(__postTodos(inputData));
       alert("성공");
