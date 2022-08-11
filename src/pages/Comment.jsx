@@ -1,4 +1,3 @@
-
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import { __getComments } from "../redux/modules/comments";
@@ -44,9 +43,7 @@ const Comment = ({ userData }) => {
     <CommnetLayout>
       <InfoData>
         <Card>
-          <Photo>
-            {/* {userData.img} // 프롭스로 백그라운드 이미지에 받아온이미지 넣기 */}
-          </Photo>
+          <Photo></Photo>
           <Banner></Banner>
           <ul>
             <li>
@@ -61,7 +58,7 @@ const Comment = ({ userData }) => {
             {comments.map((item) => {
               if (item.username === username) {
                 return (
-                  <li>
+                  <li key={item.id}>
                     {item.comment}
 
                     <p

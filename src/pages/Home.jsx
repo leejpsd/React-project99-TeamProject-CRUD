@@ -32,7 +32,6 @@ const Home = () => {
           <Nav>
             <Logo>
               <LogoSpan>Board List</LogoSpan>
-              {/* <LogoSpan>List</LogoSpan> */}
             </Logo>
             <Update></Update>
           </Nav>
@@ -127,7 +126,6 @@ const Wrap = styled.div`
   );
   background-repeat: no-repeat;
   background-attachment: fixed;
-  /* background-color: #dfe4f5; */
   position: relative;
 `;
 
@@ -289,7 +287,6 @@ const DeleteButton = styled.button`
     transition-duration: 0.5s;
     transition-timing-function: ease-in;
   }
-  /* animation-duration: 2s; */
 `;
 
 const ChatButton = styled.button`
@@ -305,17 +302,6 @@ const ChatButton = styled.button`
     transform: rotateY(180deg);
     transition-duration: 0.5s;
   }
-`;
-
-const ComentsInput = styled.input`
-  border-bottom: 1px solid #7884fb;
-`;
-
-const ComentsButton = styled.button`
-  background-color: #7884fb;
-  color: #fff;
-  padding: 0px 5px 0px 5px;
-  border-radius: 5px;
 `;
 
 export default Home;
