@@ -6,12 +6,6 @@ import { __deleteTodos } from "../redux/modules/todos";
 import styled, { keyframes } from "styled-components";
 import { timeForToday } from "./Time";
 import Update from "./Update";
-import {
-  __deleteComents,
-  __getComents,
-  __postComents,
-} from "../redux/modules/comments";
-import Comment from "./Comment";
 
 const Home = () => {
   const [userData, setUserData] = useState({});
