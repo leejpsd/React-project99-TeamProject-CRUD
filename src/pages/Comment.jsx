@@ -1,9 +1,11 @@
+
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import { __getComments } from "../redux/modules/comments";
 import { __postComments } from "../redux/modules/comments";
 import { useSelector, useDispatch } from "react-redux";
 import useInput from "../hooks/useInput";
+import { timeForToday } from "./Time";
 
 const Comment = ({ userData }) => {
   const dispatch = useDispatch();
@@ -24,7 +26,16 @@ const Comment = ({ userData }) => {
   };
 
   const commentSubmitHandler = () => {
-    dispatch(__postComments(commentData));
+    if (commentData.commentName.length < 6) {
+      console.log(commentName.length);
+      alert("닉네임을 5글자 이하로 적어주세요.");
+    } else if (commentData.comment.length > 15) {
+      alert("댓글을 15글자 이상 적어주세요");
+    } else {
+      alert("성공");
+      dispatch(__postComments(commentData));
+    }
+
     commentNameReset();
     commentReset();
   };
@@ -44,6 +55,49 @@ const Comment = ({ userData }) => {
           </ul>
         </Card>
       </InfoData>
+      <CommentBox>
+        <div>
+          <Chat_thread>
+            {comments.map((item) => {
+              if (item.username === username) {
+                return (
+                  <li>
+                    {item.comment}
+
+                    <p
+                      style={{
+                        fontSize: "14px",
+                        display: "flex",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      {item.commentName}
+                      <span
+                        style={{
+                          fontSize: "12px",
+                          marginLeft: "10px",
+                          fontStyle: "italic",
+                        }}
+                      >
+                        {timeForToday(item.time)}
+                      </span>
+                      <span
+                        style={{
+                          fontSize: "10px",
+                          marginLeft: "30px",
+                          opacity: 0.5,
+                        }}
+                      >
+                        ❌
+                      </span>
+                    </p>
+                  </li>
+                );
+              }
+            })}
+          </Chat_thread>
+        </div>
+      </CommentBox>
       <CommentInputBox>
         <form
           onSubmit={(e) => {
@@ -52,13 +106,14 @@ const Comment = ({ userData }) => {
             commentSubmitHandler();
           }}
         >
-          <input
+          <Input
             placeholder="닉네임"
             type="text"
             value={commentName}
             onChange={commentNameHandler}
           />
-          <input //15글자이상제한
+
+          <Input //15글자이상제한
             placeholder="댓글 15글자이상"
             type="text"
             value={comment}
@@ -69,23 +124,6 @@ const Comment = ({ userData }) => {
           </CommentInputBtn>
         </form>
       </CommentInputBox>
-      <CommentBox>
-        <div>
-          <Chat_thread>
-            {comments.map((item) => {
-              if (item.username === username) {
-                return (
-                  <li>
-                    {item.comment}15글자이상작성제한
-                    <p style={{ "font-size": "14px" }}>{item.commentName}</p>
-                    {/* //댓글 작성자 안넣을거면 인풋 하나만 넣고 여긴 시간몇분전 */}
-                  </li>
-                );
-              }
-            })}
-          </Chat_thread>
-        </div>
-      </CommentBox>
     </CommnetLayout>
   );
 };
@@ -96,9 +134,7 @@ const CommnetLayout = styled.div`
   height: 100%;
   padding: 48px;
 `;
-const InfoData = styled.div`
-  border: solid red 1px;
-`;
+const InfoData = styled.div``;
 const Card = styled.div`
   z-index: 1;
   width: 100%;
@@ -146,22 +182,37 @@ const Banner = styled.div`
 `;
 
 const CommentInputBox = styled.div`
-  margin-top: 15px;
-  border: solid red 1px;
+  margin-top: 10px;
+`;
+
+const Input = styled.input`
+  width: 100%;
+  height: 25px;
+  border: solid 1px #7884fb;
+  margin-bottom: 5px;
+  border-radius: 8px;
+  padding-left: 5px;
 `;
 
 const CommentInputBtn = styled.div`
   display: flex;
   justify-content: flex-end;
+  button {
+    border-radius: 10px;
+    width: 80px;
+    background-color: #7884fb;
+    color: white;
+  }
 `;
 
 const CommentBox = styled.div`
   width: 100%;
   height: 300px;
-  border: solid red 1px;
   margin-top: 15px;
   overflow-y: scroll;
   overflow-x: hidden;
+  display: flex;
+  flex-direction: column-reverse;
 `;
 
 const Chat_thread = styled.ul`
