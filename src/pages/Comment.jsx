@@ -46,7 +46,7 @@ const Comment = ({ userData }) => {
     <CommnetLayout>
       <InfoData>
         <Card>
-          <Photo></Photo>
+          <Photo style={{backgroundImage: "url(" + userData.img + ")",}}></Photo>
           <Banner></Banner>
           <ul>
             <li>
@@ -163,7 +163,6 @@ const Photo = styled.div`
   width: 150px;
   background-color: white;
   margin: 0 auto;
-  background-image: url("https://filmshotfreezer.files.wordpress.com/2011/07/untitled-1.jpg");
   background-size: cover;
   background-position: 50% 50%;
   top: 25px;
