@@ -39,8 +39,10 @@ const Comment = ({ userData }) => {
     <CommnetLayout>
       <InfoData>
         <Card>
-          <Photo>
-            {/* {userData.img} // 프롭스로 백그라운드 이미지에 받아온이미지 넣기 */}
+          <Photo
+                    style={{
+                      backgroundImage: "url(" + userData.img + ")",
+              }}>
           </Photo>
           <Banner></Banner>
           <ul>
@@ -136,7 +138,7 @@ const Card = styled.div`
   width: 100%;
   height: 230px;
   margin: 0 auto;
-
+  border-radius: 20px;
   background-color: white;
   -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
@@ -172,9 +174,11 @@ const Banner = styled.div`
   margin-top: -154px;
   width: 100%;
   height: 130px;
-  background-image: url("https://snap-photos.s3.amazonaws.com/img-thumbs/960w/RQ2Z75PQIN.jpg");
-  background-size: cover;
-  border-bottom: solid 1px lightgrey;
+  background-color: rgba(120, 132, 251, 0.4);
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  /* border-bottom: solid 1px lightgrey; */
+  border-bottom: 1px solid lightgray;
 `;
 
 const CommentInputBox = styled.div`

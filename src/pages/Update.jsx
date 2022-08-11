@@ -78,7 +78,7 @@ const Update = () => {
         }}
       >
         <PrewImgWrap
-          style={{ backgroundImage: "url(" + imgBase64 + ")" }}
+          // style={{ backgroundImage:url("https://filmshotfreezer.files.wordpress.com/2011/07/untitled-1.jpg") }}
         ></PrewImgWrap>
 
         <FileWrap>
@@ -194,6 +194,8 @@ const PrewImgWrap = styled.div`
   border: 1px solid #dddddd;
   overflow: hidden;
   margin-bottom: 10px;
+  border-radius: 20px;
+  background-image: url(https://filmshotfreezer.files.wordpress.com/2011/07/untitled-1.jpg);
 `;
 
 const SubmitButton = styled.button`
