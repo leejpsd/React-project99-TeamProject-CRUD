@@ -7,7 +7,7 @@ export const __getComments = createAsyncThunk(
   "comments/Comments",
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.get("http://localhost:3001/Comments");
+      const data = await axios.get("https://our-todolist.herokuapp.com/Comments");
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -19,7 +19,7 @@ export const __postComments = createAsyncThunk(
   "comments/postComments",
   async (commentData, thunkAPI) => {
     try {
-      const data = await axios.post("http://localhost:3001/Comments", commentData);
+      const data = await axios.post("https://our-todolist.herokuapp.com/Comments", commentData);
     return thunkAPI.fulfillWithValue(data.data);
   } catch (error) {
   return thunkAPI.rejectWithValue(error);
@@ -31,7 +31,7 @@ export const __deleteComment = createAsyncThunk(
   "comment/deleteComment",
   async (id, thunkAPI) => {
     try {
-      await axios.delete(`http://localhost:3001/Comments/${id}`);
+      await axios.delete(`https://our-todolist.herokuapp.com/Comments/${id}`);
       return thunkAPI.fulfillWithValue(id);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
