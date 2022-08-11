@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { notInitialized } from "react-redux/es/utils/useSyncExternalStore";
 
 export const __getTodos = createAsyncThunk(
   "todos/getTodos",
@@ -70,6 +69,7 @@ export const todosSlice = createSlice({
       state.todos = state.todos.filter((todo) => todo.title === action.payload);
     },
   },
+
   extraReducers: {
     [__getTodos.pending]: (state) => {
       state.isLoading = true;
@@ -89,21 +89,18 @@ export const todosSlice = createSlice({
       state.todos.push(action.payload);
     },
     [__editTodos.fulfilled]: (state, action) => {
-      // state.todos = state.todos.map((list) => {
-      //     if (list.id === action.payload.id) {
-      //       return { ...list, 'title':action.payload.title,'body':action.payload.body};
-      //     } else {
-      //       return list;
-      //     }
-      //   })
       state.todos = state.todos.map((list) =>
         list.id === action.payload.id
-          ? { ...list, title: action.payload.title, body: action.payload.body }
+          ? {
+              ...list,
+              title: action.payload.title,
+              body: action.payload.body,
+            }
           : list
       );
     },
   },
 });
 
-export const { serchTodos } = todosSlice.actions;
+export const { serchTodos, stateTodo } = todosSlice.actions;
 export default todosSlice.reducer;
