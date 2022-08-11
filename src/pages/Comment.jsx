@@ -46,11 +46,7 @@ const Comment = ({ userData }) => {
     <CommnetLayout>
       <InfoData>
         <Card>
-          <Photo
-            style={{
-              backgroundImage: "url(" + userData.img + ")",
-            }}>
-          </Photo>
+          <Photo></Photo>
           <Banner></Banner>
           <ul>
             <li>
@@ -65,7 +61,7 @@ const Comment = ({ userData }) => {
             {comments.map((item) => {
               if (item.username === username) {
                 return (
-                  <li>
+                  <li key={item.id}>
                     {item.comment}
 
                     <p

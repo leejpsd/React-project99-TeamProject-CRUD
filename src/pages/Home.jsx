@@ -32,7 +32,6 @@ const Home = () => {
           <Nav>
             <Logo>
               <LogoSpan>Board List</LogoSpan>
-              {/* <LogoSpan>List</LogoSpan> */}
             </Logo>
             <Update></Update>
           </Nav>
@@ -109,6 +108,26 @@ const Wrap = styled.div`
   max-width: 100vw;
   height: 100vh;
   display: flex;
+  background: -moz-linear-gradient(
+    -45deg,
+    #183850 0,
+    #183850 25%,
+    #192c46 50%,
+    #22254c 75%,
+    #22254c 100%
+  );
+  background: -webkit-linear-gradient(
+    -45deg,
+    #183850 0,
+    #183850 25%,
+    #192c46 50%,
+    #22254c 75%,
+    #22254c 100%
+  );
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  position: relative;
+
 `;
 
 const Container = styled.section`
@@ -265,7 +284,6 @@ const DeleteButton = styled.button`
     transition-duration: 0.5s;
     transition-timing-function: ease-in;
   }
-  /* animation-duration: 2s; */
 `;
 
 const ChatButton = styled.button`
@@ -280,17 +298,6 @@ const ChatButton = styled.button`
     transform: rotateY(180deg);
     transition-duration: 0.5s;
   }
-`;
-
-const ComentsInput = styled.input`
-  border-bottom: 1px solid #7884fb;
-`;
-
-const ComentsButton = styled.button`
-  background-color: #7884fb;
-  color: #fff;
-  padding: 0px 5px 0px 5px;
-  border-radius: 5px;
 `;
 
 export default Home;
