@@ -23,7 +23,6 @@ const EditPage = () => {
 
   const editHandler = () => {
     dispatch(__editTodos(editData));
-    // navigate("/");
   };
 
   return (
@@ -33,12 +32,12 @@ const EditPage = () => {
         editHandler();
       }}
     >
-      <input //
+      <input
         defaultValue={title}
         type="text"
         onChange={titleHandler}
       />
-      <input //
+      <input
         name="body"
         defaultValue={body}
         type="text"
