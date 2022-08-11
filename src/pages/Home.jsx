@@ -127,6 +127,7 @@ const Wrap = styled.div`
   background-repeat: no-repeat;
   background-attachment: fixed;
   position: relative;
+
 `;
 
 const Container = styled.section`
@@ -235,21 +236,18 @@ const Card = styled.div`
 `;
 
 const ImgWrap = styled.div`
-  width: 70px;
-  height: 70px;
+  width: 100px;
+  height: 80px;
   border-radius: 5px;
   background-size: cover;
   background-position: center center;
-  box-shadow: 2px 4px 2px 2px grey;
 `;
 
 const TextWrap = styled.div`
   width: 100%;
   cursor: pointer;
-  box-shadow: 2px 4px 2px 2px grey;
   border-radius: 10px;
   padding: 0px 5px 0px 5px;
-  border: 1px solid black;
 `;
 
 const Title = styled.h5`
@@ -281,7 +279,6 @@ const DeleteButton = styled.button`
   padding: 0;
   border: none;
   cursor: pointer;
-  box-shadow: 2px 2px 2px 2px grey;
   &:hover {
     transform: rotate(30deg);
     transition-duration: 0.5s;
@@ -296,7 +293,6 @@ const ChatButton = styled.button`
   padding: 0;
   border: none;
   border-radius: 10px;
-  box-shadow: 2px 2px 2px 2px grey;
   cursor: pointer;
   &:hover {
     transform: rotateY(180deg);

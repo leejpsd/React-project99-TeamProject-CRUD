@@ -7,7 +7,7 @@ export const __getComments = createAsyncThunk(
   "comments/Comments",
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.get("http://localhost:3001/Comments");
+      const data = await axios.get("https://our-todolist.herokuapp.com/Comments");
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -19,11 +19,23 @@ export const __postComments = createAsyncThunk(
   "comments/postComments",
   async (commentData, thunkAPI) => {
     try {
-      const data = await axios.post("http://localhost:3001/Comments", commentData);
+      const data = await axios.post("https://our-todolist.herokuapp.com/Comments", commentData);
     return thunkAPI.fulfillWithValue(data.data);
   } catch (error) {
   return thunkAPI.rejectWithValue(error);
 }
+  }
+);
+
+export const __deleteComment = createAsyncThunk(
+  "comment/deleteComment",
+  async (id, thunkAPI) => {
+    try {
+      await axios.delete(`https://our-todolist.herokuapp.com/Comments/${id}`);
+      return thunkAPI.fulfillWithValue(id);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
   }
 );
 
@@ -51,8 +63,12 @@ export const commentsSlice = createSlice({
     [__getComments.rejected]: (state, action) => {
       state.isLoading = false; // 에러가 발생했지만, 네트워크 요청이 끝났으니, false로 변경합니다.
       state.error = action.payload; // catch 된 error 객체를 state.error에 넣습니다.
-    },[__postComments.fulfilled]: (state, action) => {
+    },
+    [__postComments.fulfilled]: (state, action) => {
       state.comments.push(action.payload)
+    },
+    [__deleteComment.fulfilled]: (state, action) => {
+      state.comments = state.comments.filter((list) => list.id !== action.payload);
     },
   },
 });
